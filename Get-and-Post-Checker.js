@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 /* Application Port */
-app.set('port', 3071);
+app.set('port', 3000);
 
 /* Query Request Handing Function */
 function queryRequest(query){
