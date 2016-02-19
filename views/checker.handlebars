@@ -1,0 +1,37 @@
+<h1>{{type}} Request Received</h1>
+
+<p>
+<table border="1">
+	<caption>URL Query Request Information</caption>
+	<tr>
+		<th>Name</th>
+		<th>Value</th>
+	</tr>
+	{{#each queryRequest}}
+    <tr>
+		<td>{{this.name}}</td>
+		<td>{{this.value}}</td>
+	</tr>
+	{{/each}}
+</table>
+</p>
+
+<p>
+{{#if bodyRequest}}
+<table border="1">
+	<caption>Body Request Information</caption>
+	<tr>
+		<th>Name</th>
+		<th>Value</th>
+	</tr>
+		{{#each bodyRequest}}
+    <tr>
+		<td>{{this.name}}</td>
+		<td>{{this.value}}</td>
+	</tr>
+	{{/each}}
+</table>
+{{else}}
+	<p>Body request was not submitted</p>
+{{/if}}
+</p>

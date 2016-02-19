@@ -51,21 +51,26 @@ function bodyRequest(body){
 	return qParams;  /* Add requrest to context object */
 }
 
-/* GET Request Handler */
+/* Home Catcher */
 app.get('/', function(req,res){
+	res.render('home');
+});
+
+/* GET Request Handler */
+app.get('/checker', function(req,res){
 	var context = {};
 	context.type = "GET";
 	context.queryRequest = queryRequest(req.query);
-	res.render('home', context);
+	res.render('checker', context);
 });
 
 /* POST Request Handler */
-app.post('/', function(req,res){
+app.post('/checker', function(req,res){
   	var context = {};
 	context.type = "POST";
 	context.queryRequest = queryRequest(req.query);
 	context.bodyRequest = bodyRequest(req.body);
-	res.render('home', context);
+	res.render('checker', context);
 });
 
 /* ERROR Handler */
