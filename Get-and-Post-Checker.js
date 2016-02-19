@@ -7,7 +7,7 @@
 ** Program Filename: Get-and-Post-Checker.js
 ** Description: Week 7 Assignment - GET and POST checker. Main javascript file.
 **
-** Code for processing GET and POST requests is from CS 290 lecture:
+** Code for processing GET and POST requests are modified from CS 290 lecture:
 ** http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html
 *************************************************************************** */
 
@@ -28,17 +28,34 @@ app.use(bodyParser.json());
 /* Application Port */
 app.set('port', 3071);
 
+/* Query Request Handing Function */
+function queryRequest(query){
+	/* Process Request Modified from CS 290 Lecture 
+	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
+	var qParams = [];
+	for (var p in query){  /* Loop through request query */
+		qParams.push({'name':p,'value':query[p]})
+	}
+	return qParams;  /* Add requrest to context object */
+	//return context;
+}
+
+/* Body Request Handling Function */
+function bodyRequest(body){
+	/* Process Request Modified from CS 290 Lecture 
+	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
+	var qParams = [];
+	for (var p in body){  /* Loop through request body */
+		qParams.push({'name':p,'value':body[p]})
+	}
+	return qParams;  /* Add requrest to context object */
+}
+
 /* GET Request Handler */
 app.get('/', function(req,res){
 	var context = {};
 	context.type = "GET";
-	/* Process Request - From CS 290 Lecture 
-	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
-	var qParams = [];
-	for (var p in req.query){  /* Loop through request query */
-		qParams.push({'name':p,'value':req.query[p]})
-	}
-	context.dataList = qParams;  /* Add requrest to context object */
+	context.queryRequest = queryRequest(req.query);
 	res.render('home', context);
 });
 
@@ -46,13 +63,8 @@ app.get('/', function(req,res){
 app.post('/', function(req,res){
   	var context = {};
 	context.type = "POST";
-	/* Process Request - From CS 290 Lecture 
-	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
-	var qParams = [];
-	for (var p in req.body){  /* Loop through request body */
-		qParams.push({'name':p,'value':req.body[p]})
-	}
-	context.dataList = qParams;  /* Add requrest to context object */
+	context.queryRequest = queryRequest(req.query);
+	context.bodyRequest = bodyRequest(req.body);
 	res.render('home', context);
 });
 
