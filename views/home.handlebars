@@ -1,0 +1,21 @@
+<h1>{{type}} Request Received</h1>
+<table border="1">
+	<caption>URL Request Information</caption>
+	
+</table>
+
+{{#if showBodyTable}}
+<table border="1">
+	<caption>Body Request Information</caption>
+	<tr>
+		<th>Name</th>
+		<th>Value</th>
+	</tr>
+	{{#each dataList}}
+    <tr>
+		<td>{{this.name}}</td>
+		<td>{{this.value}}</td>
+	</tr>
+	{{/each}}
+</table>
+{{/if}}

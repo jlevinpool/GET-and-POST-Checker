@@ -6,20 +6,23 @@
 **
 ** Program Filename: Get-and-Post-Checker.js
 ** Description: Week 7 Assignment - GET and POST checker. Main javascript file.
+**
+** Code for processing GET and POST requests is from CS 290 lecture:
+** http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html
 *************************************************************************** */
 
 /* Express and Middleware */
 var express = require('express');
 var app = express();
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-var bodyParser = ('body-parser');
+var bodyParser = require('body-parser');
 
 /* Handlebars Setup */
 app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 /* Body Parser Setup */
-app.use(bodyParser.urlencoded({extended:false});
+app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 /* Application Port */
@@ -27,24 +30,37 @@ app.set('port', 3071);
 
 /* GET Request Handler */
 app.get('/', function(req,res){
-	var reqContext = {};
-	reqContext.type = "GET";
-	res.render('home',reqContext);
+	var context = {};
+	context.type = "GET";
+	/* Process Request - From CS 290 Lecture 
+	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
+	var qParams = [];
+	for (var p in req.query){  /* Loop through request query */
+		qParams.push({'name':p,'value':req.query[p]})
+	}
+	context.dataList = qParams;  /* Add requrest to context object */
+	res.render('home', context);
 });
 
 /* POST Request Handler */
 app.post('/', function(req,res){
-	var reqContext = {};
-	reqContext.type = "POST";
-	res.render('home',reqContext);
+  	var context = {};
+	context.type = "POST";
+	/* Process Request - From CS 290 Lecture 
+	   http://eecs.oregonstate.edu/ecampus-video/CS290/core-content/hello-node/express-forms.html */
+	var qParams = [];
+	for (var p in req.body){  /* Loop through request body */
+		qParams.push({'name':p,'value':req.body[p]})
+	}
+	context.dataList = qParams;  /* Add requrest to context object */
+	res.render('home', context);
 });
-
 
 /* ERROR Handler */
 app.use(function(req,res){
 	res.status(404);
 	res.render('404_-_Not_Found');
-}
+});
 
 app.use(function(err, req, res, next){
   console.error(err.stack);
