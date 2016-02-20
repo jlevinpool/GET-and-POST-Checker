@@ -25,6 +25,9 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+/* CSS Setup */
+app.use(express.static(__dirname + '/public'));
+
 /* Application Port */
 app.set('port', 3071);
 
