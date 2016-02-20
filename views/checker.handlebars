@@ -1,6 +1,7 @@
 <h1>{{type}} Request Received</h1>
 
 <p>
+{{#if queryRequest}}
 <table>
 	<caption>URL Query Request Information</caption>
 	<tr>
@@ -15,6 +16,9 @@
 	{{/each}}
 </table>
 </p>
+{{else}}
+	<p>Empty URL querty request</p>
+{{/if}}
 
 <p>
 {{#if bodyRequest}}
